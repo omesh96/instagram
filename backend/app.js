@@ -17,12 +17,16 @@ const express=require("express")
 const app=express()
 const PORT=5000;
 const mongoose=require("mongoose");
-const mongoURL = require("./keys");
+const {mongoURL} = require("./keys");
 const userRouter = require("./routes/auth.js");
+const cors=require("cors");
+const postRouter = require("./routes/createPost");
 
 app.use(express.json())
+app.use(cors())
 
 app.use("/user",userRouter)
+app.use("/post",postRouter)
 
   mongoose.connect(mongoURL)
 

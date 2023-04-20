@@ -1,7 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "../css/Profile.css"
 
 const Profile = () => {
+ const [myPosts,setMyPosts]=useState([])
+ const [name,setName]=useState("")
+
+ useEffect(()=>{
+ fetch("http://localhost:5000/post/myposts",{
+  headers:{
+    "Authorization":"Bearer "+localStorage.getItem("token")
+  }
+ })
+ .then((res)=>res.json())
+ .then((result)=> {
+  setMyPosts(result.myAllPosts)
+ // setName(result.myAllPosts.userName) 
+ })
+ //console.log("result",result)
+ },[])
+  
+ // console.log("myPosts",myPosts)
+
   return (
     <div className='profile'>
       {/* Profile frame */}
@@ -15,7 +34,7 @@ const Profile = () => {
 
     {/* profile Data */}
         <div className="profile-data">
-        <h1>Omesh Coder</h1>
+        <h1>{JSON.parse(localStorage.getItem("user")).name}</h1>
         <div className="profile-info" style={{display:"flex"}}>
           <p>40 Post</p>
           <p>40 Follower</p>
@@ -28,18 +47,11 @@ const Profile = () => {
         {/* Gallery */}
 
         <div className="gallery">
-          <img src="https://images.unsplash.com/photo-1607283817061-bac25eeaefab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=804&q=80"
-           alt="" />
-            <img src="https://images.unsplash.com/photo-1607283817061-bac25eeaefab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=804&q=80"
-           alt="" />
-            <img src="https://images.unsplash.com/photo-1607283817061-bac25eeaefab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=804&q=80"
-           alt="" />
-            <img src="https://images.unsplash.com/photo-1607283817061-bac25eeaefab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=804&q=80"
-           alt="" />
-            <img src="https://images.unsplash.com/photo-1607283817061-bac25eeaefab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=804&q=80"
-           alt="" />
-            <img src="https://images.unsplash.com/photo-1607283817061-bac25eeaefab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=804&q=80"
-           alt="" />
+        {myPosts && myPosts.map((el)=>{
+          return <div className="gallery-box">
+            <img key={el._id} src={el.photo} alt="posts" className='items' />
+          </div>
+        })}
         </div>
     </div>
   )

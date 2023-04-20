@@ -1,35 +1,116 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "../css/Home.css"
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
+  const [data,setData]=useState([])
+  const [count,setCount]=useState(0)
+  const navigate=useNavigate()
+
+  useEffect(()=>{
+ const token =localStorage.getItem("token")
+ if(!token){
+   navigate("/signup")
+ }
+ // Fetching All the post
+ fetch(`http://localhost:5000/post/allposts`,{
+  headers:{
+    "Content-Type":"application/json",
+    "Authorization":"Bearer "+ localStorage.getItem("token")
+}
+ }).then(res=> res.json())
+ .then(result=> setData(result))
+ .catch(err=> console.log(err))
+  },[])
+
+  const likePost=(id)=>{
+      fetch("http://localhost:5000/post/like",{
+        method:"PUT",
+        headers:{
+          "Content-Type":"application/json",
+          "Authorization":"Bearer "+localStorage.getItem("token")
+        },
+        body:JSON.stringify({
+          postId:id
+        })
+      }).then(res=>res.json())
+      .then((result)=>{
+        const newData=data.map((posts)=>{
+          if(posts._id== result._id){
+            return result
+          } else{
+            return posts
+          }
+        })
+        setData(newData)
+        console.log(result)
+      })
+      
+  }
+  
+
+  const unLikePost=(id)=>{
+    fetch("http://localhost:5000/post/unlike",{
+      method:"PUT",
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":"Bearer "+ localStorage.getItem("token")
+      },
+      body:JSON.stringify({
+        postId:id
+      })
+    }).then(res=>res.json())
+    .then((result)=>{
+      const newData = data.map((posts) => {
+        if (posts._id == result._id) {
+          return result;
+        } else {
+          return posts;
+        }
+      });
+      setData(newData);
+    // setCount(count+1)
+      console.log("result",result)
+    })
+    
+}
+
+
   return (
     <div className='home'>
       {/* card */}
-
-      <div className="card">
+       {data.map((el)=>{
+        console.log(el)
+      return (
+        <div className="card">
         {/* card header */}
         <div className="card-header">
 
           <div className="card-pic">
-            <img src="https://images.unsplash.com/photo-1607283817061-bac25eeaefab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=804&q=80" 
+            <img src={el.photo} 
             alt="" />
           </div>
-          <h5>Omesh</h5>
+          <h5>{el.userName}</h5>
         </div>
 
          {/* card image */}
 
          <div className="card-image">
-          <img src="https://images.unsplash.com/photo-1681407980201-9c1e64d5f502?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80"
+          <img src={el.photo}
            alt="" />
          </div>
  
       {/* card content */}
 
       <div className="card-content">
-      <span className="material-symbols-outlined">favorite</span>
-      <p>1 Like</p>
-      <p>This is Amazing..!</p>
+        {
+          el.likes.includes(JSON.parse(localStorage.getItem("user"))._id) ? 
+          (<span className="material-symbols-outlined material-symbols-outlined-red" onClick={()=>unLikePost(el._id)}>favorite</span>
+          ) : (<span className="material-symbols-outlined" onClick={()=>likePost(el._id)}>favorite</span>)
+        }
+      
+      <p>{el.likes.length} Likes</p>
+      <p>{el.body}</p>
       </div>
 
       {/* add comment */}
@@ -41,6 +122,10 @@ const Home = () => {
      </div>
 
       </div>
+      )
+       })}
+
+     
     </div>
   )
 }

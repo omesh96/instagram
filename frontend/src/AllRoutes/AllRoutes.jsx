@@ -4,6 +4,7 @@ import Signup from '../Component/Signup'
 import SignIn from '../Component/SignIn'
 import Profile from '../Component/Profile'
 import Home from '../Component/Home'
+import CreatePost from '../Component/CreatePost'
 
 
 const AllRoutes = () => {
@@ -14,6 +15,8 @@ const AllRoutes = () => {
     <Route path='/signup' element={<Signup />}></Route>
     <Route path='/signin' element={<SignIn />}></Route>
     <Route path='/profile' element={<Profile />}></Route>
+    <Route path='/createpost' element={<CreatePost />}></Route>
+    
         </Routes>
     </div>
   )

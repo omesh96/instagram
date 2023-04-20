@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import "../css/SignIn.css"
 import logo from "../assets/logo1.png"
 import { Link,useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { LoginContext } from '../Context/loginContext'
 
 
 const SignIn = () => {
+  const {setUserLogin}= useContext(LoginContext)
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
   const navigate=useNavigate()
@@ -40,7 +42,11 @@ if(!resp){
          alertError(data.error)
       }
      else{
-      alertSuccess(data.msg)
+      alertSuccess("Signed In Successfully...!")
+      console.log(data.token)
+      localStorage.setItem("token",data.token)
+      localStorage.setItem("user",JSON.stringify(data.user))
+      setUserLogin(true)
       navigate("/")
      }
       console.log(data)
