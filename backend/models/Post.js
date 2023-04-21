@@ -20,6 +20,10 @@ const { UserModel } = require("./model")
         type:ObjectId,
         ref:"InstaUser"  // same name hona chaiye jo model ka naam hai
     }],
+    comments:[{
+        comment:{type:String},
+        postedBy:{type:ObjectId,ref:"InstaUser"}
+    }],
     userName:{
         type:String,
         required:true

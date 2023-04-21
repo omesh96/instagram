@@ -10,6 +10,7 @@ const POST=mongoose.model("InstaPost")
  postRouter.get("/allposts",requireLogin,(req,res)=>{
  PostModel.find()
  // .populate("postedBy")  error aa rha hai 
+ .populate("comments.postedBy", "_id name")
  .then(posts=> res.json(posts))
  .catch(err=> console.log(err))
  })
@@ -67,7 +68,30 @@ postRouter.put("/unlike",requireLogin,(req,res)=>{
         if(err){
             return res.status(422).json({error:err})
         } else{
-            res.json({result:result})
+            res.json(result)
+        }
+    }).catch((err) => {
+        console.log(err)
+      });
+})
+
+postRouter.put("/comment",requireLogin,(req,res)=>{
+    const comment={
+        comment:req.body.text,
+        postedBy:req.user._id
+    }
+    PostModel.findByIdAndUpdate(req.body.postId,{
+        $push:{comments:comment}
+    },{
+        new:true
+    })
+    .populate("comments.postedBy", "_id name")
+   
+    .then((result,err)=>{  
+        if(err){
+            return res.status(422).json({error:err})
+        } else{
+            res.json(result)
         }
     }).catch((err) => {
         console.log(err)
