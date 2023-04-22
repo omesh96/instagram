@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import "../css/Profile.css"
+import PostDetail from './PostDetail'
 
 const Profile = () => {
  const [myPosts,setMyPosts]=useState([])
  const [name,setName]=useState("")
+ const [show,setShow]=useState(false)
+ const [posts,setPost]=useState([])
 
  useEffect(()=>{
  fetch("http://localhost:5000/post/myposts",{
@@ -19,6 +22,17 @@ const Profile = () => {
  //console.log("result",result)
  },[])
   
+
+ const toggleDetails=(posts)=>{
+  console.log("posts",posts)
+  if(show){
+      setShow(false)
+      
+  } else{
+     setShow(true)
+     setPost(posts)
+  }
+}
  // console.log("myPosts",myPosts)
 
   return (
@@ -49,10 +63,16 @@ const Profile = () => {
         <div className="gallery">
         {myPosts && myPosts.map((el)=>{
           return <div className="gallery-box">
-            <img key={el._id} src={el.photo} alt="posts" className='items' />
+            <img key={el._id} src={el.photo} alt="posts" className='items' 
+            onClick={()=>toggleDetails(el)}
+            />
           </div>
         })}
         </div>
+        {show && 
+        <PostDetail item={posts} toggleDetails={toggleDetails} />
+        
+        }
     </div>
   )
 }

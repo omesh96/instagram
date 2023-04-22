@@ -38,6 +38,7 @@ postRouter.post("/create",requireLogin, (req,res)=>{
 postRouter.get("/myposts",requireLogin,(req,res)=>{
   // console.log(req.user)
   PostModel.find({postedBy:req.user._id})
+  .populate("comments.postedBy", "_id name")
   .then((myPosts)=>{
     res.status(200).json({myAllPosts:myPosts})
   })
@@ -94,6 +95,34 @@ postRouter.put("/comment",requireLogin,(req,res)=>{
             res.json(result)
         }
     }).catch((err) => {
+        console.log(err)
+      });
+})
+
+ // Delete Post //
+postRouter.delete("/deletepost/:postId",requireLogin,async(req,res)=>{
+    const id=req.params.postId
+    // console.log(id)
+   await PostModel.findById(id)
+  //  .populate("postedBy", "_id")
+    .then((post,err)=>{
+        if(err || !post){
+            return res.status(422).json({error:err})
+        }
+     //  console.log(post.postedBy.toString(), req.user._id.toString())
+        if(post.postedBy.toString()==req.user._id.toString()){
+         // post.remove()
+         PostModel.findByIdAndDelete(id)
+          .then(result=> {
+            return res.json({msg:"Successfully DELETED"})
+          }).catch((err)=> {
+           console.log(err)
+          })
+        } else{
+            return res.status(422).json({msg:"You are not Authorised to delete This Post"})
+        }
+    })
+    .catch((err) => {
         console.log(err)
       });
 })
