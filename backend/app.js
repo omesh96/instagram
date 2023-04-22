@@ -21,12 +21,14 @@ const {mongoURL} = require("./keys");
 const userRouter = require("./routes/auth.js");
 const cors=require("cors");
 const postRouter = require("./routes/createPost");
+const profileRouter = require("./routes/user");
 
 app.use(express.json())
 app.use(cors())
 
 app.use("/user",userRouter)
 app.use("/post",postRouter)
+app.use("/profile",profileRouter)
 
   mongoose.connect(mongoURL)
 

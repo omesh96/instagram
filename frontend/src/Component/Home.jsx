@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "../css/Home.css"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const Home = () => {
@@ -147,7 +147,11 @@ const Home = () => {
             <img src={el.photo} 
             alt="" />
           </div>
-          <h5>{el.userName}</h5>
+          <h5>
+            <Link to={`/profile/${el.postedBy}`}>
+              {el.userName}
+            </Link>
+          </h5>
         </div>
 
          {/* card image */}

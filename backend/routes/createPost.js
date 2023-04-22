@@ -127,4 +127,6 @@ postRouter.delete("/deletepost/:postId",requireLogin,async(req,res)=>{
       });
 })
 
+ 
+
 module.exports=postRouter
