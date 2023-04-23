@@ -36,3 +36,10 @@ textarea{
     outline: none;
     margin-top: 5px;
 }
+
+@media screen and (min-width:801px){
+    .createPost{
+        z-index: 1;
+        margin-top: 90px;
+    }
+}

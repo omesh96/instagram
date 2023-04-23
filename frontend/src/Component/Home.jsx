@@ -203,7 +203,7 @@ const Home = () => {
           <div className="card-header" style={{borderBottom:"1px solid #000000029"}}>
 
 <div className="card-pic">
-<img src="http://res.cloudinary.com/omeshcloud/image/upload/v1681994572/tldh0uhj33dvf5rov9ys.jpg"
+<img src={item.postedBy.Photo ? item.postedBy.Photo : picLink}
   alt="" />
 </div>
 <h5>{item.userName}</h5>

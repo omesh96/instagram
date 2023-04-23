@@ -1,3 +1,4 @@
+
 .card{
     max-width: 500px;
     height: max-content;
@@ -67,7 +68,7 @@
 
 .showComment{
     width: 100vw;
-    min-height: 100vh;
+    min-height:100vh;
     position: fixed;
     top: 0;
     left: 0;
@@ -128,4 +129,23 @@
   'wght' 700,
   'GRAD' 0,
   'opsz' 48
+}
+
+@media screen and (min-width:801px){
+    .home{
+        z-index: 1;
+        margin-top: 90px;
+    }
+    .showComment{
+        z-index: 1;
+        margin-top: 100px;
+       
+    }
+    .close-comment{
+        z-index: 1;
+        margin-top: 80px;
+    }
+    .container{
+       height: 400px;
+    }
 }
