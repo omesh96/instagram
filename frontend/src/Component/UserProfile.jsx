@@ -17,7 +17,7 @@ const UserProfile = () => {
  const [isFollow,setIsFollow]=useState(false)
 
  useEffect(()=>{
- fetch(`http://localhost:5000/profile/user/${userid}`,{
+ fetch(`https://splendid-tan-beanie.cyclic.app/profile/user/${userid}`,{
   headers:{
     "Authorization":"Bearer "+localStorage.getItem("token")
   }
@@ -39,7 +39,7 @@ const UserProfile = () => {
  // To follow user //
   const followUser=(userId)=>{
     console.log("userId",userId)
-     fetch("http://localhost:5000/profile/follow",{
+     fetch("https://splendid-tan-beanie.cyclic.app/profile/follow",{
         method:"PUT",
         headers:{
             "Content-Type":"application/json",
@@ -61,7 +61,7 @@ const UserProfile = () => {
   
  // To Unfollow user //
  const unFollowUser=(userId)=>{
-    fetch(`http://localhost:5000/profile/unfollow`,{
+    fetch(`https://splendid-tan-beanie.cyclic.app/profile/unfollow`,{
        method:"PUT",
        headers:{
            "Content-Type":"application/json",

@@ -32,7 +32,7 @@ const Signup = () => {
     }
    // console.log({name,email,userName,password})
     // sending data to server 
-    fetch(`http://localhost:5000/user/signup`,{
+    fetch(`https://splendid-tan-beanie.cyclic.app/user/signup`,{
       method:"POST",
       headers:{
         "Content-Type":"application/json"

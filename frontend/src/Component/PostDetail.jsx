@@ -12,7 +12,7 @@ const PostDetail = ({item,toggleDetails}) => {
      const removePost=(postId)=>{
        // console.log(postId)
        if(window.confirm("Do You Really want to Delete this Post ?")){
-        fetch(`http://localhost:5000/post/deletepost/${postId}`,{
+        fetch(`https://splendid-tan-beanie.cyclic.app/post/deletepost/${postId}`,{
             method:"DELETE",
             headers:{
                 "Content-Type":"application/json",

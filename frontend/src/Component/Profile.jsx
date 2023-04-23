@@ -13,7 +13,7 @@ const Profile = () => {
  const [user,setUser]=useState("")
 
  useEffect(()=>{
- fetch(`http://localhost:5000/profile/user/${JSON.parse(localStorage.getItem("user"))._id}`,{
+ fetch(`https://splendid-tan-beanie.cyclic.app/profile/user/${JSON.parse(localStorage.getItem("user"))._id}`,{
   headers:{
     "Authorization":"Bearer "+localStorage.getItem("token")
   }

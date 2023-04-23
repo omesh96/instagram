@@ -25,7 +25,7 @@ const MyFollowingPosts = () => {
 
   
  // Fetching All the post
- fetch(`http://localhost:5000/post/myfollowingposts`,{
+ fetch(`https://splendid-tan-beanie.cyclic.app/post/myfollowingposts`,{
   headers:{
     "Content-Type":"application/json",
     "Authorization":"Bearer "+ localStorage.getItem("token")
@@ -50,7 +50,7 @@ const MyFollowingPosts = () => {
   }
 
   const likePost=(id)=>{
-      fetch("http://localhost:5000/post/like",{
+      fetch("https://splendid-tan-beanie.cyclic.app/post/like",{
         method:"PUT",
         headers:{
           "Content-Type":"application/json",
@@ -76,7 +76,7 @@ const MyFollowingPosts = () => {
   
 
   const unLikePost=(id)=>{
-    fetch("http://localhost:5000/post/unlike",{
+    fetch("https://splendid-tan-beanie.cyclic.app/post/unlike",{
       method:"PUT",
       headers:{
         "Content-Type":"application/json",
@@ -104,7 +104,7 @@ const MyFollowingPosts = () => {
 // function to make comment //
  const makeComment=(text,id)=>{
   console.log(text,id)
- fetch("http://localhost:5000/post/comment",{
+ fetch("https://splendid-tan-beanie.cyclic.app/post/comment",{
   method:"PUT",
   headers:{
     "Content-Type":"application/json",

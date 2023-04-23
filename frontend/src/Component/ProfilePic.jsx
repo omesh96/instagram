@@ -24,7 +24,7 @@ const ProfilePic = ({changeProfile}) => {
 
      const postPic=()=>{
         
-            fetch("http://localhost:5000/profile/uploadprofilepic",{
+            fetch("https://splendid-tan-beanie.cyclic.app/profile/uploadprofilepic",{
                 method:"PUT",
                 headers:{
                     "Content-Type":"application/json",

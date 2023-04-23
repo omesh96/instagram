@@ -26,7 +26,7 @@ if(!resp){
 }
 
 
-    fetch(`http://localhost:5000/user/signin`,{
+    fetch(`https://splendid-tan-beanie.cyclic.app/user/signin`,{
       method:"POST",
       headers:{
         "Content-Type":"application/json"

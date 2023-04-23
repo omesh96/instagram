@@ -16,7 +16,7 @@ const CreatePost = () => {
      useEffect(()=>{
          // saving post to mongo Db 
          if(url){
-            fetch("http://localhost:5000/post/create",{
+            fetch("https://splendid-tan-beanie.cyclic.app/post/create",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json",
