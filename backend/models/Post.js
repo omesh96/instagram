@@ -14,7 +14,7 @@ const { UserModel } = require("./model")
     },
     postedBy:{
         type:ObjectId,
-        ref:"USER"
+        ref:"InstaUser"
     },
     likes:[{
         type:ObjectId,
@@ -28,7 +28,7 @@ const { UserModel } = require("./model")
         type:String,
         required:true
     }
- })
+ },{timestamps:true})
 
  const PostModel=mongoose.model("InstaPost",postSchema)
 

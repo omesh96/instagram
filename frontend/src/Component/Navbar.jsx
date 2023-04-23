@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 import logo from "../assets/logo1.png"
-import "../Component/Navbar.css"
-import { Link } from 'react-router-dom'
+import "../css/Navbar.css"
+import { Link,useNavigate } from 'react-router-dom'
 import { LoginContext } from '../Context/loginContext'
 
 
 const Navbar = ({login}) => {
+  const navigate=useNavigate()
   const {setModalOpen}=useContext(LoginContext)
 
   const loginStatus=()=>{
@@ -15,6 +16,7 @@ const Navbar = ({login}) => {
    <>
     <Link to="/profile"> <li>Profile</li></Link>
     <Link to="/createpost"> <li>Create Post</li></Link>
+    <Link style={{marginLeft:"20px"}} to="/followingpost"> <li>My Following </li></Link>
     <Link to={""}> 
     <button onClick={()=>setModalOpen(true)} className='primaryBtn'>Log out</button>
     </Link>
@@ -34,7 +36,7 @@ const Navbar = ({login}) => {
 
   return (
     <div className='navbar'>
-        <img src={logo} alt="logo" />
+        <img src={logo} alt="logo" onClick={()=>navigate("/")} style={{cursor:"pointer"}}  />
 
         <ul className='nav-menu'>
         {loginStatus()}

@@ -6,6 +6,7 @@ import Profile from '../Component/Profile'
 import Home from '../Component/Home'
 import CreatePost from '../Component/CreatePost'
 import UserProfile from '../Component/UserProfile'
+import MyFollowingPosts from '../Component/MyFollowingPosts'
 
 
 const AllRoutes = () => {
@@ -18,6 +19,7 @@ const AllRoutes = () => {
     <Route exact path='/profile' element={<Profile />}></Route>
     <Route path='/createpost' element={<CreatePost />}></Route>
     <Route path='/profile/:userid' element={<UserProfile />}></Route>
+    <Route path='/followingpost' element={<MyFollowingPosts />}></Route>
     
         </Routes>
     </div>

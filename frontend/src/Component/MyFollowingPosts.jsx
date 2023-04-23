@@ -3,8 +3,7 @@ import "../css/Home.css"
 import { useNavigate,Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-const Home = () => {
-  var picLink="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStgQaQhSW_3UZyQK6WLM2cmNFUPmEkRxeGS8bff17wvxj-wk5jKegJmegs7m-KDfxNYBGFQM72mks&usqp=CAU&ec=48665701"
+const MyFollowingPosts = () => {
   const [data,setData]=useState([])
   const [count,setCount]=useState(0)
   const [comment,setComment]=useState("")
@@ -26,7 +25,7 @@ const Home = () => {
 
   
  // Fetching All the post
- fetch(`http://localhost:5000/post/allposts`,{
+ fetch(`http://localhost:5000/post/myfollowingposts`,{
   headers:{
     "Content-Type":"application/json",
     "Authorization":"Bearer "+ localStorage.getItem("token")
@@ -145,11 +144,11 @@ const Home = () => {
         <div className="card-header">
 
           <div className="card-pic">
-            <img src={el.postedBy.Photo ? el.postedBy.Photo : picLink} 
+            <img src={el.photo} 
             alt="" />
           </div>
           <h5>
-            <Link to={`/profile/${el.postedBy._id}`}>
+            <Link to={`/profile/${el.postedBy}`}>
               {el.userName}
             </Link>
           </h5>
@@ -257,4 +256,4 @@ close
   )
 }
 
-export default Home
+export default MyFollowingPosts

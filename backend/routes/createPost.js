@@ -9,8 +9,9 @@ const POST=mongoose.model("InstaPost")
 
  postRouter.get("/allposts",requireLogin,(req,res)=>{
  PostModel.find()
- // .populate("postedBy")  error aa rha hai 
+  .populate("postedBy", "_id name Photo") // error aa rha hai 
  .populate("comments.postedBy", "_id name")
+ .sort("-createdAt")
  .then(posts=> res.json(posts))
  .catch(err=> console.log(err))
  })
@@ -39,6 +40,7 @@ postRouter.get("/myposts",requireLogin,(req,res)=>{
   // console.log(req.user)
   PostModel.find({postedBy:req.user._id})
   .populate("comments.postedBy", "_id name")
+  .sort("-createdAt")
   .then((myPosts)=>{
     res.status(200).json({myAllPosts:myPosts})
   })
@@ -49,7 +51,8 @@ postRouter.put("/like",requireLogin,(req,res)=>{
         $push:{likes:req.user._id}  // req.user._id middleware se aayega
     },{
         new:true  // taki pta chal jaye ki jo update hai wo new hai
-    }).then((result,err)=>{  
+    }).populate("postedBy", "_id name Photo")
+    .then((result,err)=>{  
         if(err){
             return res.status(422).json({error:err})
         } else{
@@ -65,7 +68,8 @@ postRouter.put("/unlike",requireLogin,(req,res)=>{
         $pull:{likes:req.user._id}  // req.user._id middleware se aayega
     },{
         new:true  // taki pta chal jaye ki jo update hai wo new hai
-    }).then((result,err)=>{  
+    }).populate("postedBy", "_id name Photo")
+    .then((result,err)=>{  
         if(err){
             return res.status(422).json({error:err})
         } else{
@@ -87,6 +91,7 @@ postRouter.put("/comment",requireLogin,(req,res)=>{
         new:true
     })
     .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name Photo")
    
     .then((result,err)=>{  
         if(err){
@@ -127,6 +132,18 @@ postRouter.delete("/deletepost/:postId",requireLogin,async(req,res)=>{
       });
 })
 
+
+// to show following posts
+
+postRouter.get("/myfollowingposts",requireLogin,(req,res)=>{
+    PostModel.find({postedBy:{$in:req.user.following}})
+   // .populate("postedBy","_id name")
+   // .populate("comments.postedBy","_id name")
+    .then(posts=>{
+        return res.json(posts)
+    })
+    .catch(err=> console.log(err))
+})
  
 
 module.exports=postRouter
